@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Green Plate</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --green: #2d6a4f;
+      --lime: #95d45a;
+      --cream: #fdf8f0;
+      --dark: #1a1a1a;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--dark);
+      min-height: 100vh;
+      font-family: 'DM Sans', sans-serif;
+      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* animated bg */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse at 20% 20%, #1b4332 0%, transparent 55%),
+        radial-gradient(ellipse at 80% 80%, #081c15 0%, transparent 55%),
+        radial-gradient(ellipse at 60% 10%, #2d6a4f44 0%, transparent 45%);
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 20px;
+      background: rgba(26, 26, 26, 0.85);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(149, 212, 90, 0.15);
+    }
+
+    .logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 22px;
+      color: var(--lime);
+      letter-spacing: -0.5px;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .nav-links a {
+      color: rgba(255,255,255,0.6);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 500;
+      padding: 6px 12px;
+      border-radius: 20px;
+      transition: all 0.2s;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: var(--dark);
+      background: var(--lime);
+    }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      z-index: 1;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 20px 60px;
+      text-align: center;
+      min-height: calc(100vh - 60px);
+    }
+
+    /* typing text */
+    .tagline {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(26px, 7vw, 52px);
+      color: var(--cream);
+      line-height: 1.2;
+      overflow: hidden;
+      white-space: nowrap;
+      border-right: 3px solid var(--lime);
+      width: 0;
+      animation: typing 2.5s steps(18) forwards, blink 0.6s infinite;
+      margin-bottom: 10px;
+    }
+
+    @keyframes typing {
+      to { width: 18ch; }
+    }
+
+    @keyframes blink {
+      50% { border-color: transparent; }
+    }
+
+    .tagline span { color: var(--lime); }
+
+    .subtitle {
+      color: rgba(255,255,255,0.4);
+      font-size: 15px;
+      margin-bottom: 52px;
+      opacity: 0;
+      animation: fadeIn 0.6s ease 2.6s forwards;
+    }
+
+    @keyframes fadeIn {
+      to { opacity: 1; }
+    }
+
+    /* ── CHOICE CARDS ── */
+    .choices {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      justify-content: center;
+      opacity: 0;
+      animation: fadeIn 0.6s ease 2.8s forwards;
+    }
+
+    .choice-card {
+      width: clamp(140px, 38vw, 200px);
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 22px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform 0.28s ease, border-color 0.28s ease, box-shadow 0.28s ease;
+    }
+
+    .choice-card:hover {
+      transform: translateY(-8px);
+      border-color: rgba(149,212,90,0.45);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.5), 0 0 0 1px rgba(149,212,90,0.2);
+    }
+
+    .choice-card:active {
+      transform: scale(0.96);
+    }
+
+    .choice-card img {
+      width: 100%;
+      aspect-ratio: 3/4;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.4s ease;
+    }
+
+    .choice-card:hover img {
+      transform: scale(1.06);
+    }
+
+    .choice-body {
+      padding: 14px 14px 18px;
+    }
+
+    .choice-tag {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      padding: 3px 10px;
+      border-radius: 20px;
+      margin-bottom: 8px;
+    }
+
+    .tag-veg {
+      background: rgba(149,212,90,0.15);
+      color: var(--lime);
+    }
+
+    .tag-nonveg {
+      background: rgba(220,80,60,0.15);
+      color: #ff6b5b;
+    }
+
+    .choice-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 18px;
+      color: var(--cream);
+      line-height: 1.2;
+      margin-bottom: 4px;
+    }
+
+    .choice-desc {
+      font-size: 12px;
+      color: rgba(255,255,255,0.4);
+    }
+
+    .choice-arrow {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 12px;
+      font-size: 13px;
+      font-weight: 600;
+      color: rgba(255,255,255,0.3);
+      transition: color 0.2s, gap 0.2s;
+    }
+
+    .choice-card:hover .choice-arrow {
+      color: var(--lime);
+      gap: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <span class="logo">Green Plate</span>
+    <div class="nav-links">
+      <a href="index.html" class="active">Home</a>
+      <a href="about.html">About</a>
+      <a href="veg.html">Veg</a>
+      <a href="nonveg.html">Non-Veg</a>
+      <a href="help.html">Help</a>
+    </div>
+  </nav>
+
+  <div class="hero">
+    <h1 class="tagline">Your Choice <span>Matters</span></h1>
+    <p class="subtitle">Fresh ingredients. Real flavour. Your call.</p>
+
+    <div class="choices">
+
+      <div class="choice-card" onclick="window.location.href='veg.html'">
+        <img src="images/veg.jpg" alt="Vegetarian">
+        <div class="choice-body">
+          <span class="choice-tag tag-veg">🌿 Veg</span>
+          <div class="choice-title">Vegetarian Meals</div>
+          <div class="choice-desc">Plant-based, rich & satisfying</div>
+          <div class="choice-arrow">Explore menu <span>→</span></div>
+        </div>
+      </div>
+
+      <div class="choice-card" onclick="window.location.href='nonveg.html'">
+        <img src="images/Non_veg.jpg" alt="Non Vegetarian">
+        <div class="choice-body">
+          <span class="choice-tag tag-nonveg">🍗 Non-Veg</span>
+          <div class="choice-title">Non-Veg Meals</div>
+          <div class="choice-desc">Bold flavours, hearty portions</div>
+          <div class="choice-arrow">Explore menu <span>→</span></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</body>
+</html>

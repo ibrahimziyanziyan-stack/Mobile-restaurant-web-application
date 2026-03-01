@@ -1,0 +1,372 @@
+!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>www.veg.com</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      background:
+        linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+        url("C:/v code/images/173765_00_2x.jpg");
+      padding: 10px;
+      margin: 0;
+      min-height: 100vh;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+
+    /* NAV */
+    .nav-div {
+      height: auto;
+      width: 100%;
+      border-radius: 20px;
+      background: transparent;
+      display: flex;
+      justify-content: flex-end;
+      flex-wrap: wrap;
+      gap: 10px;
+      backdrop-filter: blur(35px);
+      -webkit-backdrop-filter: blur(20px);
+      padding: 10px 15px;
+      position: relative;
+      margin-bottom: 10px;
+    }
+
+    .navp {
+      font-weight: bolder;
+      cursor: pointer;
+      text-decoration: none;
+      font-size: 16px;
+      color: white;
+      z-index: 1;
+    }
+
+    .nav-highlight {
+      height: 85%;
+      width: 90px;
+      position: absolute;
+      top: 5px;
+      left: 925px;
+      border-radius: 40px;
+      background: linear-gradient(135deg,
+          rgba(148, 168, 148, 0.967),
+          rgba(216, 224, 225, 0.25));
+      z-index: 0;
+      transition: all 0.3s ease;
+    }
+
+    /* GRID */
+    .transparent-effect {
+      width: 100%;
+      border-radius: 20px;
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      padding: 10px;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: 12px;
+    }
+
+    /* CARDS */
+    .box1, .box2, .box3, .box4, .box5, .box6,
+    .box7, .box8, .box9, .box10, .box11, .box12 {
+      height: auto;
+      width: 100%;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(8px);
+      border: 1px solid rgb(252, 250, 250);
+      border-radius: 16px;
+      padding: 8px;
+      cursor: pointer;
+      transition: transform 0.3s ease-in-out;
+    }
+
+    .box1:active, .box2:active, .box3:active, .box4:active,
+    .box5:active, .box6:active, .box7:active, .box8:active,
+    .box9:active, .box10:active, .box11:active, .box12:active {
+      transform: scale(0.95);
+    }
+
+    .box1 img, .box2 img, .box3 img, .box4 img, .box5 img, .box6 img,
+    .box7 img, .box8 img, .box9 img, .box10 img, .box11 img, .box12 img {
+      width: 100%;
+      aspect-ratio: 4/3;
+      object-fit: cover;
+      border-radius: 12px 12px 0 12px;
+      display: block;
+    }
+
+    p {
+      color: white;
+      font-family: 'Poppins', sans-serif;
+      margin: 6px 0 0 0;
+      font-size: 13px;
+    }
+
+    /* POPUP */
+    .popup {
+      width: min(90vw, 320px);
+      background-color: azure;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      padding: 15px;
+      border-radius: 20px;
+      transition: opacity 0.2s ease-in-out;
+      opacity: 0;
+      pointer-events: none;
+      z-index: 1000;
+      display: none;
+    }
+
+    .popup.animatepopup {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .popupimg {
+      height: 200px;
+      width: 100%;
+      object-fit: cover;
+      border: 3px solid black;
+      border-radius: 16px;
+      display: block;
+    }
+
+    .qtytxtpop {
+      color: black;
+      font-family: "Consolas", "Courier New", monospace;
+      margin: 10px 0 4px;
+    }
+
+    #qtyRange {
+      width: 100%;
+    }
+
+    .pricepop {
+      color: black;
+      font-family: "Consolas", "Courier New", monospace;
+      margin: 6px 0 50px;
+    }
+
+    .popup-buttons {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      margin-top: 10px;
+    }
+
+    .btn, .btn1 {
+      border-radius: 20px;
+      padding: 10px 16px;
+      background: linear-gradient(to right, rgba(49, 84, 201, 0.6), rgba(224, 39, 184, 0.6));
+      transition: transform 0.4s ease-in-out;
+      color: black;
+      font-weight: bolder;
+      border: 1px solid #ccc;
+      cursor: pointer;
+      font-size: 14px;
+      flex: 1;
+    }
+
+    .btn:hover, .btn1:hover {
+      transform: scale(0.98);
+      border: none;
+    }
+
+    .stick {
+      color: black;
+      font-weight: bolder;
+      font-size: 12px;
+      overflow: hidden;
+      white-space: nowrap;
+      margin-top: 8px;
+    }
+
+    /* Overlay backdrop */
+    .overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 999;
+    }
+
+    .overlay.active {
+      display: block;
+    }
+
+    /* Responsive breakpoints */
+    @media (min-width: 600px) {
+      .transparent-effect {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      }
+      p { font-size: 14px; }
+    }
+
+    @media (min-width: 900px) {
+      .transparent-effect {
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      }
+    }
+
+    @media (max-width: 400px) {
+      .transparent-effect {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .navp { font-size: 14px; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="nav-div">
+    <a href="index.html" class="navp">Home</a>
+    <a href="about.html" class="navp">About</a>
+    <a href="veg.html" class="navp">Veg</a>
+    <a href="nonveg.html" class="navp">Non-Veg</a>
+    <a href="help.html" class="navp">Help</a>
+    <div class="nav-highlight"></div>
+  </div>
+
+  <div class="transparent-effect">
+    <div class="box1" onclick="popupform('Paneer Butter Masala','https://images.pexels.com/photos/1117862/pexels-photo-1117862.jpeg',200)">
+      <img src="https://images.pexels.com/photos/1117862/pexels-photo-1117862.jpeg" alt="Paneer Butter Masala">
+      <p>Paneer Butter Masala</p>
+    </div>
+    <div class="box2" onclick="popupform('Vegetable Biryani','https://images.pexels.com/photos/5410401/pexels-photo-5410401.jpeg',399)">
+      <img src="https://images.pexels.com/photos/5410401/pexels-photo-5410401.jpeg" alt="Vegetable Biryani">
+      <p>Vegetable Biryani</p>
+    </div>
+    <div class="box3" onclick="popupform('Veg Fried Rice','https://images.pexels.com/photos/1624487/pexels-photo-1624487.jpeg',679)">
+      <img src="https://images.pexels.com/photos/1624487/pexels-photo-1624487.jpeg" alt="Veg Fried Rice">
+      <p>Veg Fried Rice</p>
+    </div>
+    <div class="box4" onclick="popupform('Masala Dosa','https://images.pexels.com/photos/5560763/pexels-photo-5560763.jpeg',877)">
+      <img src="https://images.pexels.com/photos/5560763/pexels-photo-5560763.jpeg" alt="Masala Dosa">
+      <p>Masala Dosa</p>
+    </div>
+    <div class="box5" onclick="popupform('Chole Bhature','https://images.pexels.com/photos/4331489/pexels-photo-4331489.jpeg',155)">
+      <img src="https://images.pexels.com/photos/4331489/pexels-photo-4331489.jpeg" alt="Chole Bhature">
+      <p>Chole Bhature</p>
+    </div>
+    <div class="box6" onclick="popupform('Veg Pulao','https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg',100)">
+      <img src="https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg" alt="Veg Pulao">
+      <p>Veg Pulao</p>
+    </div>
+    <div class="box7" onclick="popupform('Palak Paneer','https://images.pexels.com/photos/376464/pexels-photo-376464.jpeg',149)">
+      <img src="https://images.pexels.com/photos/376464/pexels-photo-376464.jpeg" alt="Palak Paneer">
+      <p>Palak Paneer</p>
+    </div>
+    <div class="box8" onclick="popupform('Veg Noodles','https://images.pexels.com/photos/2347311/pexels-photo-2347311.jpeg',300)">
+      <img src="https://images.pexels.com/photos/2347311/pexels-photo-2347311.jpeg" alt="Veg Noodles">
+      <p>Veg Noodles</p>
+    </div>
+    <div class="box9" onclick="popupform('Vegetable Kurma','https://images.pexels.com/photos/958545/pexels-photo-958545.jpeg',200)">
+      <img src="https://images.pexels.com/photos/958545/pexels-photo-958545.jpeg" alt="Vegetable Kurma">
+      <p>Vegetable Kurma</p>
+    </div>
+    <div class="box10" onclick="popupform('Aloo Gobi','https://images.pexels.com/photos/5560761/pexels-photo-5560761.jpeg',300)">
+      <img src="https://images.pexels.com/photos/5560761/pexels-photo-5560761.jpeg" alt="Aloo Gobi">
+      <p>Aloo Gobi</p>
+    </div>
+    <div class="box11" onclick="popupform('Veg Thali','https://images.pexels.com/photos/958547/pexels-photo-958547.jpeg',400)">
+      <img src="https://images.pexels.com/photos/958547/pexels-photo-958547.jpeg" alt="Veg Thali">
+      <p>Veg Thali</p>
+    </div>
+    <div class="box12" onclick="popupform('Veg Momos','https://images.pexels.com/photos/4110002/pexels-photo-4110002.jpeg',60)">
+      <img src="https://images.pexels.com/photos/4110002/pexels-photo-4110002.jpeg" alt="Veg Momos">
+      <p>Veg Momos</p>
+    </div>
+  </div>
+
+  <!-- Overlay -->
+  <div class="overlay" id="overlay" onclick="closePopup()"></div>
+
+  <!-- Popup -->
+  <div class="popup" id="popup">
+    <img class="popupimg" id="popupimg" alt="Food item">
+    <p class="qtytxtpop" id="qtytxtpop">Number of plates: <span id="qtyval">1</span></p>
+    <input type="range" id="qtyRange" min="1" max="5" value="1"
+      oninput="document.getElementById('qtyval').innerText=this.value">
+    <p class="pricepop">Price: ₹<span id="priceval">0</span></p>
+    <div class="popup-buttons">
+      <button class="btn1" onclick="samepage()">Order More</button>
+      <button class="btn" onclick="sucessespage()">Confirm</button>
+    </div>
+    <p class="stick">|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||</p>
+  </div>
+
+  <script>
+    // Nav highlight
+    const navItems = document.querySelectorAll(".navp");
+    const highlight = document.querySelector(".nav-highlight");
+
+    navItems.forEach(item => {
+      item.addEventListener("mouseenter", () => {
+        const rect = item.getBoundingClientRect();
+        const parentRect = item.parentElement.getBoundingClientRect();
+        highlight.style.left = (rect.left - parentRect.left) + "px";
+        highlight.style.width = rect.width + "px";
+      });
+    });
+
+    // Popup logic
+    let baseprice = 0;
+
+    function popupform(foodname, img, price) {
+      baseprice = price;
+      const popup = document.getElementById("popup");
+      const overlay = document.getElementById("overlay");
+
+      popup.style.display = "block";
+      overlay.classList.add("active");
+      document.getElementById("popupimg").src = img;
+
+      const qtyVal = document.getElementById("qtyval");
+      const qtyRange = document.getElementById("qtyRange");
+      qtyRange.value = 1;
+      qtyVal.innerText = 1;
+
+      const priceVal = document.getElementById("priceval");
+      priceVal.innerText = baseprice;
+
+      qtyRange.oninput = () => {
+        qtyVal.innerText = qtyRange.value;
+        priceVal.innerText = qtyRange.value * baseprice;
+      };
+
+      // Trigger animation next frame
+      requestAnimationFrame(() => popup.classList.add("animatepopup"));
+    }
+
+    function closePopup() {
+      const popup = document.getElementById("popup");
+      const overlay = document.getElementById("overlay");
+      popup.classList.remove("animatepopup");
+      overlay.classList.remove("active");
+      setTimeout(() => popup.style.display = "none", 200);
+    }
+
+    function sucessespage() {
+      window.location.href = "sucess.html";
+    }
+
+    function samepage() {
+      window.location.href = "veg.html";
+    }
+  </script>
+</body>
+
+</html>

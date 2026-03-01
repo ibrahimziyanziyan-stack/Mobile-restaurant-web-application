@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Green Plate</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --green: #2d6a4f;
+      --lime: #95d45a;
+      --cream: #fdf8f0;
+      --dark: #1a1a1a;
+      --card-bg: rgba(255,255,255,0.07);
+      --radius: 18px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--dark);
+      min-height: 100vh;
+      font-family: 'DM Sans', sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* animated gradient bg */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(ellipse at 20% 20%, #1b4332 0%, transparent 55%),
+                  radial-gradient(ellipse at 80% 80%, #081c15 0%, transparent 55%),
+                  radial-gradient(ellipse at 60% 10%, #2d6a4f44 0%, transparent 45%);
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 20px;
+      background: rgba(26, 26, 26, 0.85);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(149, 212, 90, 0.15);
+    }
+
+    .logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 22px;
+      color: var(--lime);
+      letter-spacing: -0.5px;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 6px;
+    }
+
+    .nav-links a {
+      color: rgba(255,255,255,0.6);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 500;
+      padding: 6px 12px;
+      border-radius: 20px;
+      transition: all 0.2s;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: var(--dark);
+      background: var(--lime);
+    }
+
+    /* ── HEADER ── */
+    .page-header {
+      position: relative;
+      z-index: 1;
+      padding: 32px 20px 16px;
+      text-align: center;
+    }
+
+    .page-header h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(28px, 7vw, 48px);
+      color: var(--cream);
+      line-height: 1.1;
+    }
+
+    .page-header h1 span {
+      color: var(--lime);
+    }
+
+    .page-header p {
+      color: rgba(255,255,255,0.45);
+      font-size: 14px;
+      margin-top: 8px;
+    }
+
+    /* ── GRID ── */
+    .menu-grid {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(min(150px, 100%), 1fr));
+      gap: 14px;
+      padding: 16px 16px 40px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    /* ── CARD ── */
+    .card {
+      background: var(--card-bg);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: var(--radius);
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+      animation: fadeUp 0.5s ease both;
+    }
+
+    .card:nth-child(1)  { animation-delay: 0.05s }
+    .card:nth-child(2)  { animation-delay: 0.10s }
+    .card:nth-child(3)  { animation-delay: 0.15s }
+    .card:nth-child(4)  { animation-delay: 0.20s }
+    .card:nth-child(5)  { animation-delay: 0.25s }
+    .card:nth-child(6)  { animation-delay: 0.30s }
+    .card:nth-child(7)  { animation-delay: 0.35s }
+    .card:nth-child(8)  { animation-delay: 0.40s }
+    .card:nth-child(9)  { animation-delay: 0.45s }
+    .card:nth-child(10) { animation-delay: 0.50s }
+    .card:nth-child(11) { animation-delay: 0.55s }
+    .card:nth-child(12) { animation-delay: 0.60s }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(149, 212, 90, 0.4);
+      box-shadow: 0 12px 32px rgba(0,0,0,0.4), 0 0 0 1px rgba(149,212,90,0.2);
+    }
+
+    .card:active { transform: scale(0.96); }
+
+    .card img {
+      width: 100%;
+      aspect-ratio: 1;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.4s ease;
+    }
+
+    .card:hover img { transform: scale(1.05); }
+
+    .card-body {
+      padding: 10px 10px 12px;
+    }
+
+    .card-name {
+      color: var(--cream);
+      font-size: 12px;
+      font-weight: 500;
+      line-height: 1.3;
+    }
+
+    .card-price {
+      color: var(--lime);
+      font-size: 13px;
+      font-weight: 700;
+      margin-top: 4px;
+    }
+
+    /* ── BOTTOM SHEET OVERLAY ── */
+    .overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.6);
+      z-index: 200;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+      backdrop-filter: blur(4px);
+    }
+
+    .overlay.active {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    /* ── BOTTOM SHEET ── */
+    .sheet {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 300;
+      background: #111;
+      border-top: 1px solid rgba(149,212,90,0.2);
+      border-radius: 24px 24px 0 0;
+      padding: 0 20px 32px;
+      transform: translateY(100%);
+      transition: transform 0.35s cubic-bezier(0.32, 0.72, 0, 1);
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    .sheet.open {
+      transform: translateY(0);
+    }
+
+    .sheet-handle {
+      width: 40px;
+      height: 4px;
+      background: rgba(255,255,255,0.2);
+      border-radius: 2px;
+      margin: 14px auto 18px;
+    }
+
+    .sheet-img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 16px;
+      display: block;
+    }
+
+    .sheet-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 22px;
+      color: var(--cream);
+      margin-top: 14px;
+    }
+
+    .sheet-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 16px;
+    }
+
+    .qty-label {
+      color: rgba(255,255,255,0.55);
+      font-size: 13px;
+    }
+
+    .qty-controls {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .qty-btn {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: 1px solid rgba(149,212,90,0.4);
+      background: transparent;
+      color: var(--lime);
+      font-size: 20px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      line-height: 1;
+      transition: background 0.2s;
+    }
+
+    .qty-btn:active { background: rgba(149,212,90,0.15); }
+
+    .qty-num {
+      color: white;
+      font-size: 18px;
+      font-weight: 700;
+      min-width: 20px;
+      text-align: center;
+    }
+
+    .total-price {
+      font-size: 26px;
+      font-weight: 700;
+      color: var(--lime);
+    }
+
+    .sheet-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .btn-secondary {
+      flex: 1;
+      padding: 14px;
+      border-radius: var(--radius);
+      border: 1px solid rgba(255,255,255,0.15);
+      background: transparent;
+      color: white;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .btn-secondary:active { background: rgba(255,255,255,0.07); }
+
+    .btn-primary {
+      flex: 2;
+      padding: 14px;
+      border-radius: var(--radius);
+      border: none;
+      background: var(--lime);
+      color: var(--dark);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 0.2s, opacity 0.2s;
+    }
+
+    .btn-primary:active { transform: scale(0.97); opacity: 0.9; }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <span class="logo">Green Plate</span>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="veg.html" class="active">Veg</a>
+      <a href="nonveg.html">Non-Veg</a>
+      <a href="help.html">Help</a>
+    </div>
+  </nav>
+
+  <div class="page-header">
+    <h1>Pure <span>Veg</span> Menu</h1>
+    <p>Fresh, flavourful, plant-based</p>
+  </div>
+
+  <div class="menu-grid" id="menuGrid"></div>
+
+  <div class="overlay" id="overlay" onclick="closeSheet()"></div>
+
+  <div class="sheet" id="sheet">
+    <div class="sheet-handle"></div>
+    <img class="sheet-img" id="sheetImg" alt="">
+    <p class="sheet-name" id="sheetName"></p>
+
+    <div class="sheet-row">
+      <span class="qty-label">Quantity</span>
+      <div class="qty-controls">
+        <button class="qty-btn" onclick="changeQty(-1)">−</button>
+        <span class="qty-num" id="qtyNum">1</span>
+        <button class="qty-btn" onclick="changeQty(1)">+</button>
+      </div>
+    </div>
+
+    <div class="sheet-row">
+      <span class="qty-label">Total</span>
+      <span class="total-price" id="totalPrice">₹0</span>
+    </div>
+
+    <div class="sheet-actions">
+      <button class="btn-secondary" onclick="closeSheet()">Back</button>
+      <button class="btn-primary" onclick="window.location.href='sucess.html'">Confirm Order →</button>
+    </div>
+  </div>
+
+  <script>
+    const items = [
+      { name: 'Paneer Butter Masala', img: 'https://images.pexels.com/photos/1117862/pexels-photo-1117862.jpeg', price: 200 },
+      { name: 'Vegetable Biryani',    img: 'https://images.pexels.com/photos/5410401/pexels-photo-5410401.jpeg', price: 399 },
+      { name: 'Veg Fried Rice',       img: 'https://images.pexels.com/photos/1624487/pexels-photo-1624487.jpeg', price: 679 },
+      { name: 'Masala Dosa',          img: 'https://images.pexels.com/photos/5560763/pexels-photo-5560763.jpeg', price: 877 },
+      { name: 'Chole Bhature',        img: 'https://images.pexels.com/photos/4331489/pexels-photo-4331489.jpeg', price: 155 },
+      { name: 'Veg Pulao',            img: 'https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg',  price: 100 },
+      { name: 'Palak Paneer',         img: 'https://images.pexels.com/photos/376464/pexels-photo-376464.jpeg',  price: 149 },
+      { name: 'Veg Noodles',          img: 'https://images.pexels.com/photos/2347311/pexels-photo-2347311.jpeg',price: 300 },
+      { name: 'Vegetable Kurma',      img: 'https://images.pexels.com/photos/958545/pexels-photo-958545.jpeg',  price: 200 },
+      { name: 'Aloo Gobi',            img: 'https://images.pexels.com/photos/5560761/pexels-photo-5560761.jpeg',price: 300 },
+      { name: 'Veg Thali',            img: 'https://images.pexels.com/photos/958547/pexels-photo-958547.jpeg',  price: 400 },
+      { name: 'Veg Momos',            img: 'https://images.pexels.com/photos/4110002/pexels-photo-4110002.jpeg',price: 60  },
+    ];
+
+    // Build cards from data — no repeated HTML
+    const grid = document.getElementById('menuGrid');
+    items.forEach((item, i) => {
+      const card = document.createElement('div');
+      card.className = 'card';
+      card.innerHTML = `
+        <img src="${item.img}" alt="${item.name}" loading="lazy">
+        <div class="card-body">
+          <div class="card-name">${item.name}</div>
+          <div class="card-price">₹${item.price}</div>
+        </div>`;
+      card.onclick = () => openSheet(item);
+      grid.appendChild(card);
+    });
+
+    // Sheet logic
+    let basePrice = 0;
+    let qty = 1;
+
+    function openSheet(item) {
+      basePrice = item.price;
+      qty = 1;
+      document.getElementById('sheetImg').src = item.img;
+      document.getElementById('sheetName').innerText = item.name;
+      document.getElementById('qtyNum').innerText = 1;
+      document.getElementById('totalPrice').innerText = '₹' + item.price;
+      document.getElementById('overlay').classList.add('active');
+      document.getElementById('sheet').classList.add('open');
+    }
+
+    function closeSheet() {
+      document.getElementById('overlay').classList.remove('active');
+      document.getElementById('sheet').classList.remove('open');
+    }
+
+    function changeQty(delta) {
+      qty = Math.max(1, Math.min(10, qty + delta));
+      document.getElementById('qtyNum').innerText = qty;
+      document.getElementById('totalPrice').innerText = '₹' + (qty * basePrice);
+    }
+  </script>
+</body>
+</html>
