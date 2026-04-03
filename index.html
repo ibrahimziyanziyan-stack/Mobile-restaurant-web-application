@@ -16,7 +16,7 @@
        html,
         body {
             margin: 0;
-            padding: 0;
+            padding: 0; 
             overflow: hidden;
             height: 100%;
         }
@@ -49,6 +49,8 @@
       align-items: center;
       text-align: center;
       z-index: 1;
+      
+     
     }
 
     .container2 {
@@ -136,12 +138,47 @@
   animation: fadeOut 0.9s ease-in-out forwards;
 }
 
+.alert-box{
+  position: fixed;
+  background-color: #1a1a1a;
+  color: #fdf8f0;
+  height: 120px;
+  width: 350px;
+  padding: 20px;
+  border-radius: 20px;
+  border: #95d45a 2px solid;
 
+}
+.alert-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.5);
+            backdrop-filter: blur(4px);
+            z-index: 999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+ .alert-overlay.show  {
+    transform: scale(1);
+    opacity: 1;
+     pointer-events: auto;
+  }.alert-overlay.show .alert-box {
+            transform: scale(1);
+             pointer-events: auto;
+        }
+.alert-btn:active{transform: scale(0.95);}
+.alert-btn{background-color: #95d45a; border-radius: 20px;font-weight: bold;margin-left: 120px;width: 30%;transition: all 0.3s ease-in-out; }
 
-
+.alert-icon,.alert-title,.alert-msg,.alert-btn{font-family: 'DM Sans', sans-serif;font-size: larger;margin-bottom: 10px;}
+.alert-icon{margin-left: 150px;}
   </style>
 </head>
 <body>
+ 
     <div class="container">
     <h1>Welcome to<span class="portion">ABC</span></h1>
     <h3>Please enter your table number <span class="logo">🍽️</span></h3>
@@ -152,20 +189,42 @@
     </div>
   </div>
 
+<!-- Custom Alert -->
+     <div class="alert-overlay" id="alertOverlay">
+        <div class="alert-box">
+            <div class="alert-icon" id="alertIcon">⚠️</div>
+            <div class="alert-title" id="alertTitle">Oops!</div>
+            <div class="alert-msg" id="alertMsg">Something went wrong.</div>
+            <button class="alert-btn" onclick="closeAlert()">OK</button>
+        </div>
+      </div>
+  
+
   <script>
+    function showAlert(icon,alert,msg){
+       document.getElementById("alertIcon").textContent = icon;
+            document.getElementById("alertTitle").textContent = alert;
+            document.getElementById("alertMsg").textContent = msg;
+            document.getElementById("alertOverlay").classList.add("show");
+    }
+     function closeAlert() {
+            document.getElementById("alertOverlay").classList.remove("show");
+        }
     function rules() {
       let inp = document.getElementById("input1").value;
       let num = Number(inp);
       if (inp == "" || isNaN(num) || inp == 0 || num < 0) {
-        alert("Are you dumb! pls enter a valid number");
+        showAlert("😅", "Invalid Input!", "Please enter a valid table number.");
+                return;
       }
       if (num > 0) {
         if (num > 12) {
-          alert("There are only max 12 table are there!");
+          showAlert("🚫", "Too High!", "There are only 12 tables available.");
+                return;
         }
       }
       /*delay to next page*/
-      if (num <= 12) {
+      if (num <= 12 && num!=null) {
         document.querySelector('.container').classList.add('fade-out');
   setTimeout(() => {
     window.location.href = "choose.html";
